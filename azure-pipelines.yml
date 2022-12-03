@@ -1,0 +1,25 @@
+trigger:
+- straw-poll
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    verbose: false
+- task: Npm@1
+  displayName: 'npm run build'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run build'
+- task: Npm@1
+  displayName: 'npm run deploy'
+  env:
+    GOOGLE_APPLICATION_CREDENTIALS: './straw-poll-1d153-46dc05e5f639.json'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run deploy'
